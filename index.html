@@ -13,15 +13,19 @@
   a little Perl <a href="events.pl">script</a> to generate a set of regularly 
   spaced dates (e.g. the dates of week starts) into a format that can then be 
   converted into datebook .dba format. Here's the weeks for the
-  <a href="ukc0607.dba">terms 2006/07</a> in datebook .dba format.</p>
+  <a href="ukc0708.vcs">terms 2007/08</a> in vcal format 
+  (and as an example 
+  <a href="ukc0607.dba">terms 2006/07</a> in datebook .dba format).</p>
   
-<p>To do this yourself, you'll need (1) Perl and (2) a little DOS tool called 
+
+<p>To do this yourself, you'll need (1) Perl. If you use a Mac that's it,
+  but Windows users will need (2) a little DOS tool called 
   convdb. I got a copy from <a href="http://www.geocities.com/SiliconValley/Way/4696/">here</a>. 
   It's a pretty flexible if rather fragile tool for converting from plain text 
   to the Palm .dba format.</p>
   
 <h2>Usage</h2>
-<p><code>events.pl [-h] [-l label] [-p period] [-s start] day/month/year repeat...</code><br>
+<p><code>events.pl [-h] [-v] [-n [format]] [-l label] [-p period] [-s start] day/month/year repeat...</code><br>
   events.pl expects groups of pairs of arguments. It will generate a list of dates 
   for each group, starting with the date given and repeated <code>repeat</code> 
   times. 
@@ -31,6 +35,18 @@
   <tr> 
     <td><code>-h</code></td>
     <td>Print this message and exit.</td>
+  </tr>
+  <tr> 
+    <td><code>-v</code></td>
+    <td>Use vcal format.</td>
+  </tr>
+  <tr> 
+    <td><code>-n [format]</code></td>
+    <td>Add a <em>note</em> to each entry. 
+        Notes are used in the (excellent) <a href="http://www.pimlicosoftware.com/">DateBk</a> calendar to format entries 
+	(e.g. with text and background colour, customised icon). Either use my
+	format or a string of your own choice (experiment with DateBk to see what it adds to the note field; 
+	you'll probably need to examine the note in the Palm's built-in calendar). </td>
   </tr>
   <tr> 
     <td><code>-l label</code></td>
@@ -47,20 +63,25 @@
   </tr>
 </table>
 
-<h3>Example</h3>
-First, generate a plain text listof dates in a format convdb can read. E.g. 
-<p><code>events.pl 26/9/2005 12 9/1/2006 12 1/5/2006 6 &gt; ukc0506.txt</code></p>
-<p>will produce a list in plain text for the the three terms of 2005/6 academic 
-  year. You then need to convert it to .dba format with convdb; the .dba file 
-  will be called <code>output.dba</code>. (Yes, I know the Summer Term actually 
-  starts on 2/5/2006 but that's a Tuesday). 
-  <p>Rename output.dba to something sensible, e.g. <code>ukc0506.dba</code> and 
+<h3>Mac example</h3>
+<p>First, generate the dates in vcal format. E.g.
+<p><code>events.pl -v 24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.vcs</code>
+<p>will produce a list in plain text for the the three terms of UKC 2007/8 academic year. 
+<p>Then, import it to your organiser (e.g. via the Palm desktop).
+
+<h3>Windows example</h3>
+<p>First, generate a plain text list of dates in a format convdb can read. E.g. 
+<p><code>events.pl 24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.txt</code></p>
+<p>will produce a list in plain text for the the three terms of UKC 2007/8 academic year. 
+<p>You then need to convert it to .dba format with convdb; the .dba file 
+  will be called <code>output.dba</code>. 
+<p>Finally, rename output.dba to something sensible, e.g. <code>ukc0708.dba</code> and 
   import it to your organiser (e.g. via the Palm desktop).</p>
   
 <h2>TODO</h2>
 <p>It would be nice if convdb was translated to something portable, e.g. Perl.</p>
 
 <p>&nbsp;</p>
-<p>Richard Jones, April 2006.</p>
+<p>Richard Jones, August 2007.</p>
 </body>
 </html>
