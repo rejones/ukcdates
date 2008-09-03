@@ -15,7 +15,7 @@ use vars qw($opt_h $opt_v);
 use Date::Calc qw(Add_Delta_Days);
 use Date::Manip qw(ParseDate UnixDate);
 
-my $DEFAULT_LABEL = 'UKC Week';
+my $DEFAULT_LABEL = 'Kent Week';
 my $label = $DEFAULT_LABEL;
 my $DEFAULT_PERIOD = 7;
 my $period = $DEFAULT_PERIOD;
