@@ -23,7 +23,7 @@ my $DEFAULT_NUMBER = 1;
 my $number = $DEFAULT_NUMBER;
 
 # This note provide a colour for REJ's DateBk5 calendar (currently not used)
-my $NOTE = '##@@@@@@@@@@@@@@@@V=0D=0A';
+#my $NOTE = '##@@@@@@@@@@@@@@@@V=0D=0A';
 
 my $usage = 'events.pl [-h] [-v] [-l label] [-p period] [-s start] day/month/year repeat...';
 
@@ -113,12 +113,14 @@ sub printDBA($$$$$) {
 sub printVCAL($$$$$) {
   my ($num,$month,$year, $label, $number) = @_;
   my $T = 'T';
-  my $OOZ = '00Z';
+  #my $OOZ = '00Z';
+  my $OOZ = '00';
   my $start = '0900';
   my $day = sprintf "%4d%02d%02d", $year, $month, $num;
   print "BEGIN:VEVENT\n";
   print "SUMMARY:$label $number\n";
   print "DTSTART:$day$T$start$OOZ\n";
+  print "DTEND:$day$T$start$OOZ\n";
   print "END:VEVENT\n";
 }
 
