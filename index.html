@@ -1,28 +1,37 @@
 <html>
 <head>
-<title>UKC term dates for the Palm</title>
+<title>A calendar of UKC week numbers</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
 <body bgcolor="#FFFFFF" text="#000000">
 	
-<h1>UKC dates for the Palm datebook</h1>
-<p>I live by my Palm organiser rather than the UKC paper diary. The diary has 
+<h1>A calendar of University of Kent week numbers</h1>
+<p>I live by my organisers, e.g. the calendar on my desktop, iCal, and that on my
+PDA (e.g. iPhone and before that Palm) rather than the UKC paper diary. The diary has 
   (at least) one advantage however: it specifies the week numbers. I have long 
   found it a pain to enter all of these by hand into my organiser. So I've written 
   a little Perl <a href="events.pl">script</a> to generate a set of regularly 
   spaced dates (e.g. the week number on the Monday of every week) into a format that can then be 
-  converted into datebook .dba format. Here's the weeks for 
-  <a href="terms.vcs">this academic year</a> in vcal format 
-  (and as an example 
-  <a href="ukc0607.dba">terms 2006/07</a> in datebook .dba format).</p>
+  imported into a calendar. It supports two formats: vCal which is widely used
+  and annother wich can be converted into datebook .dba (which I needed when I used the Palm Desktop on Windows).
+
+<p>Here's the weeks for 
+  <a href="terms.vcs">this academic year</a> in vCal format, ready to be
+  imported into your calendar. 
   
+<hr>
+
+<h2>DIY</h2>
 
 <p>To do this yourself, you'll need (1) Perl. If you use a Mac that's it,
   but Windows users will need (2) a little DOS tool called 
   convdb. I got a copy from <a href="http://www.geocities.com/SiliconValley/Way/4696/">here</a>. 
   It's a pretty flexible if rather fragile tool for converting from plain text 
-  to the Palm .dba format.</p>
+  to the Palm .dba format.
+  As an example, here's the  
+  <a href="ukc0607.dba">terms 2006/07</a> in datebook .dba format.</p>
+  </p>
   
 <h2>Usage</h2>
 <p><code>events.pl [-h] [-v] [-l label] [-p period] [-s start] day/month/year repeat...</code><br>
@@ -59,7 +68,7 @@
 <p>First, generate the dates in vcal format. E.g.
 <p><code>events.pl -v 24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.vcs</code>
 <p>will produce a list in plain text for the the three terms of UKC 2007/8 academic year. 
-<p>Then, import it to your organiser (e.g. via the Palm desktop).
+<p>Then, import it to your organiser (e.g. via iCal).
 
 <h3>Windows example</h3>
 <p>First, generate a plain text list of dates in a format convdb can read. E.g. 
@@ -76,6 +85,9 @@
 <p>&nbsp;</p>
 <p>Richard Jones, August 2007.</p>
 <br>&nbsp;
-<p><small>Modified: September 2008.</small></p>
+<p><small>
+Modified: September 2008.<br>
+Modified: September 2009.
+</small></p>
 </body>
 </html>
