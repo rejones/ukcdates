@@ -11,7 +11,6 @@ use strict;
 use Getopt::Long;
 use vars qw($opt_h $opt_v);
 
-#Date:Calc doesn't seem available on MacOS X
 use Date::Calc qw(Add_Delta_Days);
 use Date::Manip qw(ParseDate UnixDate);
 
