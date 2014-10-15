@@ -34,7 +34,7 @@ PDA (e.g. iPhone and before that Palm) rather than the UKC paper diary. The diar
   </p>
   
 <h2>Usage</h2>
-<p><code>events.pl [-h] [-v] [-l label] [-p period] [-s start] day/month/year repeat...</code><br>
+<p><code>events.pl [-h] [-v|d] [-l label] [-p period] [-s start] day/month/year repeat...</code><br>
   events.pl expects groups of pairs of arguments. It will generate a list of dates 
   for each group, starting with the date given and repeated <code>repeat</code> 
   times. 
@@ -47,7 +47,11 @@ PDA (e.g. iPhone and before that Palm) rather than the UKC paper diary. The diar
   </tr>
   <tr> 
     <td><code>-v</code></td>
-    <td>Use vcal format.</td>
+    <td>Use vcal format (default).</td>
+  </tr>
+   <tr> 
+    <td><code>-d</code></td>
+    <td>Use dba format.</td>
   </tr>
   <tr> 
     <td><code>-l label</code></td>
@@ -66,13 +70,13 @@ PDA (e.g. iPhone and before that Palm) rather than the UKC paper diary. The diar
 
 <h3>Mac example</h3>
 <p>First, generate the dates in vcal format. E.g.
-<p><code>events.pl -v 24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.vcs</code>
+<p><code>events.pl  24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.vcs</code>
 <p>will produce a list in plain text for the the three terms of UKC 2007/8 academic year. 
 <p>Then, import it to your organiser (e.g. via iCal).
 
 <h3>Windows example</h3>
 <p>First, generate a plain text list of dates in a format convdb can read. E.g. 
-<p><code>events.pl 24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.txt</code></p>
+<p><code>events.pl -d 24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.txt</code></p>
 <p>will produce a list in plain text for the the three terms of UKC 2007/8 academic year. 
 <p>You then need to convert it to .dba format with convdb; the .dba file 
   will be called <code>output.dba</code>. 
@@ -87,7 +91,8 @@ PDA (e.g. iPhone and before that Palm) rather than the UKC paper diary. The diar
 <br>&nbsp;
 <p><small>
 Modified: September 2008.<br>
-Modified: September 2009.
+Modified: September 2009.<br>
+Modified: October 2014 - Use all-day events.
 </small></p>
 </body>
 </html>

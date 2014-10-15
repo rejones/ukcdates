@@ -9,7 +9,7 @@
 
 use strict;
 use Getopt::Long;
-use vars qw($opt_h $opt_v);
+use vars qw($opt_h $opt_v $opt_d);
 
 use Date::Calc qw(Add_Delta_Days);
 use Date::Manip qw(ParseDate UnixDate);
@@ -20,11 +20,12 @@ my $DEFAULT_PERIOD = 7;
 my $period = $DEFAULT_PERIOD;
 my $DEFAULT_NUMBER = 1;
 my $number = $DEFAULT_NUMBER;
+my $allday = 1; # default all-day events
 
 # This note provide a colour for REJ's DateBk5 calendar (currently not used)
 #my $NOTE = '##@@@@@@@@@@@@@@@@V=0D=0A';
 
-my $usage = 'events.pl [-h] [-v] [-l label] [-p period] [-s start] day/month/year repeat...';
+my $usage = 'events.pl [-h] [-v|d] [-l label] [-p period] [-s start] day/month/year repeat...';
 
 sub help($);
 sub printDBAhdr();
@@ -37,7 +38,8 @@ GetOptions("h"     => \$opt_h,
            "l=s"   => \$label,
            "p=i"   => \$period,
            "s=i"   => \$number,
-            "v"    => \$opt_v);
+            "v"    => \$opt_v,
+            "d"    => \$opt_d);
 if($opt_h) {
   help($usage);
   exit 0;
@@ -46,14 +48,16 @@ if($opt_h) {
 die "Bad period $period.\n$usage" unless $period > 0;
 #print Dumper(@ARGV);
 die "Bad number of arguments $#ARGV.\n$usage" if ($ARGV % 2 != 0);
+die "Only one option of -d and -v (default) can be selected" if $opt_v and $opt_d;
 
 
 Date::Manip::Date_Init("Language=English","DateFormat=".$ENV{TZ});
 # Print header
-if ($opt_v) {
-  printVCALhdr();
-} else {
+if ($opt_d) {
   printDBAhdr();
+} else {
+  $opt_v = 1;
+  printVCALhdr();
 }
 
 while ($#ARGV > 0) {
@@ -67,10 +71,10 @@ while ($#ARGV > 0) {
   die "Bad repeat $repeat.\n$usage" unless $repeat > 0;
 
   for (my $i = 0; $i < $repeat; $i++) {
-    if ($opt_v) {
-      printVCAL($day,$month,$year, $label, $number);
-    } else {
+    if ($opt_d) {
       printDBA($day,$month,$year, $label, $number);
+    } else {
+      printVCAL($day,$month,$year, $label, $number);
     }
     ($year, $month, $day) = Add_Delta_Days($year, $month, $day, $period);
     $number++;
@@ -98,7 +102,7 @@ sub printVCALhdr() {
 BEGIN:VCALENDAR
 PRODID:Richard Jones events.pl generated
 TZ:+00
-VERSION:1.0
+VERSION:2.0
 EOVH
 }
 
@@ -111,15 +115,21 @@ sub printDBA($$$$$) {
 # Print vCal entry
 sub printVCAL($$$$$) {
   my ($num,$month,$year, $label, $number) = @_;
-  my $T = 'T';
-  #my $OOZ = '00Z';
-  my $OOZ = '00';
-  my $start = '0900';
+  my ($T, $OOZ, $start);
+  if ($allday) {
+    $T = '';      #ignore these in VERSION 2.0 to get all-day event
+    $OOZ = ''; 
+    $start = '';
+  } else {
+    $T = 'T';     #9am
+    $OOZ = '00';
+    $start = '0900';
+  }
   my $day = sprintf "%4d%02d%02d", $year, $month, $num;
   print "BEGIN:VEVENT\n";
   print "SUMMARY:$label $number\n";
   print "DTSTART:$day$T$start$OOZ\n";
-  print "DTEND:$day$T$start$OOZ\n";
+  #print "DTEND:$day$T$start$OOZ\n";
   print "END:VEVENT\n";
 }
 
@@ -145,5 +155,6 @@ Options:
   -p period The repeat period. Default: $DEFAULT_PERIOD;
   -s start  The starting number for the label. Default: $DEFAULT_NUMBER.
   -v	    Use vCal format rather than .dba.
+  -d	    Use .dba format rather than vCal.
 EOT
 }
