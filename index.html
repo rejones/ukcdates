@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>A calendar of UKC week numbers</title>
+<title>A calendar of Kent week numbers</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
@@ -8,36 +8,42 @@
 	
 <h1>A calendar of University of Kent week numbers</h1>
 <p>I live by my organisers, e.g. the calendar on my desktop, iCal, and that on my
-PDA (e.g. iPhone and before that Palm) rather than the UKC paper diary. The diary has 
+PDA (e.g. iPhone and before that Palm) rather than the Kent paper diary. The diary has 
   (at least) one advantage however: it specifies the week numbers. I have long 
   found it a pain to enter all of these by hand into my organiser. So I've written 
   a little Perl <a href="events.pl">script</a> to generate a set of regularly 
   spaced dates (e.g. the week number on the Monday of every week) into a format that can then be 
-  imported into a calendar. It supports two formats: vCal which is widely used
-  and annother wich can be converted into datebook .dba (which I needed when I used the Palm Desktop on Windows).
+  imported into a calendar. It supports two formats: vCal
+  (<code>.vcs</code>,<code>.ics</code>) which is widely used,
+  and a legacy (?) format that can be converted into datebook <code>.dba</code>
+  (which I needed when I used the Palm Desktop on Windows).
 
 <p>Here's the weeks for 
-  <a href="terms.vcs">this academic year</a> in vCal format, ready to be
-  imported into your calendar. 
+  <a href="terms.ics">this academic year</a> in vCal/ics format, ready to be
+  imported into your calendar.  Each week is represented by an all-day event on Monday.
   
 <hr>
 
 <h2>DIY</h2>
 
-<p>To do this yourself, you'll need (1) Perl. If you use a Mac that's it,
-  but Windows users will need (2) a little DOS tool called 
+<p>To do this yourself, you'll need (1) Perl. If you use a Mac, Google calendar
+  or (I think) most modern Windows calendars, that's it.</p>
+<blockquote>
+<p>However, Windows users with Palm organisers (does anyone still use these?) 
+  will need (2) a little DOS tool called 
   convdb. I got a copy from <a href="http://www.geocities.com/SiliconValley/Way/4696/">here</a>. 
   It's a pretty flexible if rather fragile tool for converting from plain text 
   to the Palm .dba format.
   As an example, here's the  
   <a href="ukc0607.dba">terms 2006/07</a> in datebook .dba format.</p>
   </p>
+</blockquote>
   
 <h2>Usage</h2>
 <p><code>events.pl [-h] [-v|d] [-l label] [-p period] [-s start] day/month/year repeat...</code><br>
   events.pl expects groups of pairs of arguments. It will generate a list of dates 
   for each group, starting with the date given and repeated <code>repeat</code> 
-  times. 
+  times, using a period of <code>period</code> days. 
   
 <h3> Options:</h3>
 <table width="100%" border="0" cellpadding="2">
@@ -49,18 +55,18 @@ PDA (e.g. iPhone and before that Palm) rather than the UKC paper diary. The diar
     <td><code>-v</code></td>
     <td>Use vcal format (default).</td>
   </tr>
-   <tr> 
+  <tr> 
     <td><code>-d</code></td>
     <td>Use dba format.</td>
   </tr>
   <tr> 
     <td><code>-l label</code></td>
     <td>Print each event as &quot;label <em>N</em>&quot; where <em>N</em> is the 
-      number of the event.Default: &quot;UKC Week&quot;.</td>
+      number of the event. Default: &quot;Kent Week&quot;.</td>
   </tr>
   <tr> 
     <td><code>-p period</code></td>
-    <td>The repeat period. Default: 7</td>
+    <td>The repeat period in days. Default: 7.</td>
   </tr>
   <tr>
     <td><code>-s start</code></td>
@@ -68,16 +74,26 @@ PDA (e.g. iPhone and before that Palm) rather than the UKC paper diary. The diar
   </tr>
 </table>
 
-<h3>Mac example</h3>
+<h3>Example</h3>
 <p>First, generate the dates in vcal format. E.g.
-<p><code>events.pl  24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.vcs</code>
-<p>will produce a list in plain text for the the three terms of UKC 2007/8 academic year. 
-<p>Then, import it to your organiser (e.g. via iCal).
+<p><code>events.pl 24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.ics</code>
+<p>will produce a list in plain text for the the three terms of Kent 2007/8 academic year. 
+<p>Then, import it to your calendar.</p>
+<p><em>Technical Note</em>:
+There's little difference between .vcs and .ics files, at least as far as
+generating week dates is concerned.
+The <code>.ics</code> format should specify <code>VERSION:2.0</code> whereas 
+<code>.vcs</code> should specify <code>VERSION:1.0</code>.
+My code generates  <code>VERSION:2.0</code>.
+However, I find that importing a file with an <code>.ics</code> extension into Mac OS Calendar
+"works", i.e. events appear in the all-day section of the calendar, whereas
+importing a file with an <code>.vcs</code> extension does not, regardless of the
+<code>VERSION</code>: the event appears as literally all day.
 
-<h3>Windows example</h3>
+<h3>Windows for Palm example</h3>
 <p>First, generate a plain text list of dates in a format convdb can read. E.g. 
-<p><code>events.pl -d 24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.txt</code></p>
-<p>will produce a list in plain text for the the three terms of UKC 2007/8 academic year. 
+<p><code>events.pl 24/9/2007 12 14/1/2008 12 5/5/2008 6 &gt; ukc0708.txt</code></p>
+<p>will produce a list in plain text for the the three terms of Kent 2007/8 academic year. 
 <p>You then need to convert it to .dba format with convdb; the .dba file 
   will be called <code>output.dba</code>. 
 <p>Finally, rename output.dba to something sensible, e.g. <code>ukc0708.dba</code> and 
@@ -86,13 +102,12 @@ PDA (e.g. iPhone and before that Palm) rather than the UKC paper diary. The diar
 <h2>TODO</h2>
 <p>It would be nice if convdb was translated to something portable, e.g. Perl.</p>
 
-<p>&nbsp;</p>
-<p>Richard Jones, August 2007.</p>
-<br>&nbsp;
+<p>Richard Jones</p>
 <p><small>
+Original: August 2007.<br>
 Modified: September 2008.<br>
 Modified: September 2009.<br>
-Modified: October 2014 - Use all-day events.
+Modified: October 2014 - Use all-day events; default <code>.ics</code> format.
 </small></p>
 </body>
 </html>
