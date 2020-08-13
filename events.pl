@@ -9,6 +9,7 @@
 
 use strict;
 use Getopt::Long;
+use Data::GUID;
 use vars qw($opt_h $opt_v $opt_d);
 
 use Date::Calc qw(Add_Delta_Days);
@@ -126,8 +127,10 @@ sub printVCAL($$$$$) {
     $start = '0900';
   }
   my $day = sprintf "%4d%02d%02d", $year, $month, $num;
+  my $guid = Data::GUID->new;
   print "BEGIN:VEVENT\n";
   print "SUMMARY:$label $number\n";
+  print "UID:$guid\n";
   print "DTSTART:$day$T$start$OOZ\n";
   #print "DTEND:$day$T$start$OOZ\n";
   print "END:VEVENT\n";
